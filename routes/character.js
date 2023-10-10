@@ -38,7 +38,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const data = await Character.findOne({ _id: req.params.id });
+    const data = await Character.findOne({ _id: req.params.id })
+      .populate("weapontype")
+      .populate("element")
+      .populate("region");
     res.status(200).send(data);
   } catch (error) {
     res.status(400).send({ message: "Character id not found" });
@@ -56,6 +59,7 @@ router.post("/", isAdminMiddleware, async (req, res) => {
       birthday: req.body.birthday,
       release_date: req.body.release_date,
       image: req.body.image,
+      detail: req.body.detail,
     });
     await newCharacter.save();
     res.status(200).send(newCharacter);

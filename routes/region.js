@@ -15,14 +15,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", isAdminMiddleware, async (req, res) => {
-  // create a placeholder for a new movie
-  const newRegion = new Region({
-    name: req.body.name,
-    image: req.body.image,
-  });
-  // save the movie into mongodb
-  await newRegion.save();
-  res.send(newRegion);
+  try {
+    // create a placeholder for a new movie
+    const newRegion = new Region({
+      name: req.body.name,
+      image: req.body.image,
+    });
+    // save the movie into mongodb
+    await newRegion.save();
+    res.status(200).send(newRegion);
+  } catch (error) {
+    res.status(400).send({ message: error._message });
+  }
 });
 
 router.delete("/:id", isAdminMiddleware, async (req, res) => {

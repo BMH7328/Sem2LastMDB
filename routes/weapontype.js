@@ -17,15 +17,19 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", isAdminMiddleware, async (req, res) => {
-  // create a placeholder for a new movie
-  const newWeapon = new Weapontype({
-    name: req.body.name,
-    image: req.body.image,
-    info: req.body.info,
-  });
-  // save the movie into mongodb
-  await newWeapon.save();
-  res.send(newWeapon);
+  try {
+    // create a placeholder for a new movie
+    const newWeapon = new Weapontype({
+      name: req.body.name,
+      image: req.body.image,
+      info: req.body.info,
+    });
+    // save the movie into mongodb
+    await newWeapon.save();
+    res.status(200).send(newWeapon);
+  } catch (error) {
+    res.status(400).send({ message: error._message });
+  }
 });
 
 router.delete("/:id", isAdminMiddleware, async (req, res) => {
