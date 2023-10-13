@@ -42,6 +42,10 @@ const characterSchema = new Schema({
     type: String,
     required: true,
   },
+  constellation: {
+    type: String,
+    required: true,
+  },
 });
 
 // when the task is updated or created

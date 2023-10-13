@@ -60,6 +60,7 @@ router.post("/", isAdminMiddleware, async (req, res) => {
       release_date: req.body.release_date,
       image: req.body.image,
       detail: req.body.detail,
+      constellation: req.body.constellation,
     });
     await newCharacter.save();
     res.status(200).send(newCharacter);

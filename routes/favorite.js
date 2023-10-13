@@ -5,7 +5,6 @@ const router = express.Router();
 const Favorite = require("../models/favorite");
 
 const authMiddleware = require("../middleware/auth");
-const isAdminMiddleware = require("../middleware/isAdmin");
 
 router.get("/", authMiddleware, async (req, res) => {
   try {
@@ -58,24 +57,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.put("/:id", isAdminMiddleware, async (req, res) => {
-//   try {
-//     const favorite_id = req.params.id;
-
-//     const updatedFavorite = await Favorite.findByIdAndUpdate(
-//       favorite_id,
-//       req.body,
-//       {
-//         new: true,
-//       }
-//     );
-//     res.status(200).send(updatedFavorite);
-//   } catch (error) {
-//     res.status(400).send({ message: error._message });
-//   }
-// });
-
-router.delete("/:id", isAdminMiddleware, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const favorite_id = req.params.id;
 
