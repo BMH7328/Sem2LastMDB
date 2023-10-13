@@ -30,6 +30,7 @@ router.get("/", async (req, res) => {
           .populate("weapontype")
           .populate("element")
           .populate("region")
+          .sort({ _id: -1 })
       );
   } catch (error) {
     res.status(400).send({ message: "Character not found" });
