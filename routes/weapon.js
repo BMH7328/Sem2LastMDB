@@ -12,7 +12,9 @@ router.get("/", async (req, res) => {
     if (weapontype) {
       filter.weapontype = weapontype;
     }
-    res.status(200).send(await Weapon.find(filter).populate("weapontype"));
+    res
+      .status(200)
+      .send(await Weapon.find(filter).populate("weapontype").sort({ _id: -1 }));
   } catch (error) {
     res.status(400).send({ message: "Weapon Type not found" });
   }
